@@ -77,8 +77,8 @@ def container(language):
         d.point((7, 2), fill=INK)
         d.point((7, 7), fill=INK)
     elif language == "JavaScript":
-        d.rectangle((4, 2, 11, 7), fill=INK)
-        d.rectangle((5, 2, 10, 6), fill="#f5d768")
+        d.rectangle((3, 1, 11, 8), fill="#f5d768")
+        tiny(d, 4, 2, "JS", INK)
     elif language == "Rust":
         for x, y in (
             (5, 1),
@@ -96,9 +96,18 @@ def container(language):
         d.ellipse((4, 2, 10, 6), fill=WHITE)
         d.rectangle((6, 3, 8, 5), fill=INK)
     elif language == "C++":
-        d.polygon(((7, 1), (11, 3), (11, 6), (7, 8), (3, 6), (3, 3)), fill=WHITE)
-        d.rectangle((6, 3, 8, 6), fill=color)
-        d.point((8, 3), fill=WHITE)
+        # A two-tone blue hexagon with a clear white C and two separate pluses.
+        # The full badge carries its own C++ lettering instead of a second label.
+        d.polygon(((13, 1), (23, 3), (23, 6), (13, 8), (3, 6), (3, 3)), fill="#235a97")
+        d.polygon(((13, 1), (13, 8), (3, 6), (3, 3)), fill="#3b92c4")
+        for row, bits in enumerate((0b01111, 0b11000, 0b11000, 0b11000, 0b01111)):
+            for col in range(5):
+                if bits & (1 << (4 - col)):
+                    d.point((6 + col, 2 + row), fill=WHITE)
+        for x in (13, 18):
+            d.line((x, 4, x + 2, 4), fill=WHITE)
+            d.line((x + 1, 3, x + 1, 5), fill=WHITE)
+        return tile
     elif language == "C":
         d.polygon(((7, 1), (11, 3), (11, 6), (7, 8), (3, 6), (3, 3)), fill="#c3d2ff")
         tiny(d, 6, 2, "C", "#283593")
